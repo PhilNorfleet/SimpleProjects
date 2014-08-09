@@ -1,0 +1,70 @@
+"use strict"
+function NoughtsDeterminer(strArr) { 
+  var $matrix = Matrix(strArr);
+  //return matrix.slice(0)
+  var space = 0;
+  for (var i = 0; i < $matrix.length; i++) {
+    if (i == 1 || i == 2) {space += 1} 
+    for (var j = 0; j < $matrix.length; j++) {
+      //console.log(space)
+      if (strArr[space] == '-') {
+        if (winCheck(Matrix(strArr), 'O', i, j)) {
+          return space
+        }
+        if (winCheck(Matrix(strArr), 'X', i, j)) {
+          return space
+        }
+      }
+      space += 1
+    
+    }
+
+  }
+
+  return "none"; 
+         
+}
+function Matrix(strArr){
+  var _matrix = strArr.join("").split("<>");
+  for (var i = 0; i < _matrix.length; i++) {
+    _matrix[i] = _matrix[i].split('')
+  }  
+  return _matrix
+}
+function winCheck(matrix, str, indexi, indexj) {
+  var copy = [];
+  for (var i = 0; i < matrix.length; i++) {
+    copy.push(matrix[i])
+  }
+  //console.log(matrix + "\n");
+  copy[indexi][indexj] = str;
+  console.log(copy);
+  console.log(indexi, indexj)
+  if (copy[0][indexj] == str && copy[1][indexj] == str && copy[2][indexj] == str) {
+    return true
+  }
+  if (copy[indexi][0] == str && copy[indexi][1] == str && copy[indexi][2] == str) {
+    return true
+  }
+  if (indexi == indexj && (copy[0][0] == str && copy[1][1] == str && copy[2][2] == str) ) { 
+    console.log(copy)
+    return true
+  }
+  if (indexi + indexj == 2 && (copy[0][2] == str && copy[1][1] == str && copy[2][0] == str)) {
+    return true
+  }
+  return false
+}
+var strArr1 = [ 
+  "X","-","O","<>",
+  "-","-","O","<>",
+  "-","-","X"];
+var strArr2 = [ 
+  "-","-","O","<>",
+  "-","-","O","<>",
+  "X","-","X"];
+var strArr3 = [ 
+  "O","X","O","<>",
+  "O","-","O","<>",
+  "X","-","X"];
+console.log(NoughtsDeterminer(strArr3))
